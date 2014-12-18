@@ -2,9 +2,9 @@ require 'eventmachine'
 require 'em-http'
 require 'json'
 
-token = '5492df20916ed57593642b7de6e8408d'
-organization = 'avidity'
-flow = 'promote'
+token = ''
+organization = ''
+flow = ''
 
 #{
 # "event"=>"message",
