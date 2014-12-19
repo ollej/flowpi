@@ -1,5 +1,6 @@
 require 'em-http'
 require 'json'
+require 'shellwords'
 
 module Flow
   class Pi
@@ -9,7 +10,7 @@ module Flow
 
     def run
       http = EM::HttpRequest.new(
-        "https://stream.flowdock.com/flows/#{@options[:organization]}/#{@options[:flow]}",
+        "https://stream.flowdock.com/flows?filter=#{@options[:filter]}",
         :keepalive => true, :connect_timeout => 0, :inactivity_timeout => 0)
       EventMachine.run do
         s = http.get(:head => { 'Authorization' => [@options[:token], ''], 'accept' => 'application/json'})
@@ -29,7 +30,8 @@ module Flow
       if message.has_content?
         if message.content.match(@options[:message_matcher])
           puts "Speaking message: #{message.content}"
-          %x(say '#{message.content}'})
+          msg = Shellwords.escape(message.content)
+          %x(say '#{msg}'})
         else
           puts "Ignoring message: #{message.content}"
         end
