@@ -1,6 +1,5 @@
 require 'em-http'
 require 'json'
-require 'shellwords'
 
 module Flow
   class Pi
@@ -30,8 +29,7 @@ module Flow
       if message.has_content?
         if message.content.match(@options[:message_matcher])
           puts "Speaking message: #{message.content}"
-          msg = Shellwords.escape(message.content)
-          %x(say '#{msg}'})
+          %x(say '#{message.content}'})
         else
           puts "Ignoring message: #{message.content}"
         end
@@ -57,10 +55,11 @@ module Flow
 
     def content
       if @data['content'].kind_of?(Hash)
-        @data['content']['text']
+        content = @data['content']['text']
       else
-        @data['content']
+        content = @data['content']
       end
+      content.gsub(/[^a-z ]/i, '')
     end
   end
 end
