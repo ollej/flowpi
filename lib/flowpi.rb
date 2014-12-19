@@ -31,7 +31,7 @@ module Flowpi
       if message.has_content?
         if message.content.match(@options[:message_matcher])
           puts "Speaking message: #{message.content}"
-          %x(say '#{message.content}'})
+          %x(espeak "#{message.content}" 2>/dev/null)
         else
           puts "Ignoring message: #{message.content}"
         end
