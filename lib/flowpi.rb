@@ -1,8 +1,10 @@
 require 'em-http'
 require 'json'
 
-module Flow
-  class Pi
+module Flowpi
+  VERSION = '0.1.0'
+
+  class Server
     def initialize(options = {})
       @options = options
     end
@@ -25,7 +27,7 @@ module Flow
     end
 
     def handle_line(line)
-      message = Flow::Message.new.parse(line)
+      message = Flowpi::Message.new.parse(line)
       if message.has_content?
         if message.content.match(@options[:message_matcher])
           puts "Speaking message: #{message.content}"
