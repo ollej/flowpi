@@ -2,8 +2,6 @@ require 'em-http'
 require 'json'
 
 module Flowpi
-  VERSION = '0.1.0'
-
   class Server
     def initialize(options = {})
       @options = options

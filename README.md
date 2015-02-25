@@ -24,7 +24,7 @@ Run
 ---
 
 ```bash
-    $ export FLOW_MATCH='/coffee|mo+rni+ng|morr+on|mo+rgo+n|buenos|beer|champagne/i'
+    $ export FLOW_MATCH='coffee|mo+rni+ng|morr+on|mo+rgo+n|buenos|beer|champagne'
     $ export FLOW_FILTER=example/flow1,example/flow2
     $ export FLOW_TOKEN=ififjejhatumlig3
     $ flowpi.rb

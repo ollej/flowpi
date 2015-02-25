@@ -1,6 +1,6 @@
 $:.push File.expand_path("../lib", __FILE__)
 
-require 'flowpi'
+require 'flowpi/version'
 
 Gem::Specification.new do |s|
   s.name        = 'flowpi'
