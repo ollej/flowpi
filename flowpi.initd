@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+### BEGIN INIT INFO
+# Provides:          flowpi
+# Required-Start:    $all
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Flowpi speaker
+# Description:       Listen to flows in Flowdock and speak messages matching a regexp.
+### END INIT INFO
+
+export FLOW_TOKEN=foobarbaz
+export FLOW_MATCH='coffee|mo+rni+ng|morr+on|mo+rgo+n|buenos|beer|champagne'
+export FLOW_FILTER=flow/main,flow/promote
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin
+
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+case "$1" in
+
+  start)
+    log_begin_msg "Starting flowpi service"
+    sudo -u pi -E flowpi.rb >> /var/log/flowpi.log &
+    log_end_msg $?
+  ;;
+
+  stop)
+    log_begin_msg "Stopping flowpi service."
+    killall flowpi.rb
+    log_end_msg $?
+  ;;
+
+  *)
+    echo "Usage: /etc/init.d/flowpi {start|stop}"
+    exit 1
+  ;;
+
+esac
+exit 0
