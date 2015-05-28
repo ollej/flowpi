@@ -13,6 +13,8 @@
 export FLOW_TOKEN=foobarbaz
 export FLOW_MATCH='coffee|mo+rni+ng|morr+on|mo+rgo+n|buenos|beer|champagne'
 export FLOW_FILTER=flow/main,flow/promote
+export FLOW_LOG_FILE=/var/log/flowpi.log
+export FLOW_LOG_LEVEL=INFO
 
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin
 

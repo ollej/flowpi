@@ -1,13 +1,28 @@
 require 'em-http'
 require 'json'
+require 'logger'
 
 module Flowpi
   class Server
+    attr_reader :logger
+
     def initialize(options = {})
       @options = options
+      if @options[:log_file].nil? || @options[:log_file].empty?
+        @logger = ::Logger.new(STDOUT)
+      else
+        @logger = ::Logger.new(@options[:log_file])
+      end
+      @logger.level = ::Logger.const_get(@options.fetch(:log_level, 'WARN'))
+      @logger.datetime_format = @options.fetch(:log_date_format, '%Y-%m-%d %H:%M:%S')
+
+      trap "SIGINT" do
+        exit 130
+      end
     end
 
     def run
+      logger.info "Starting Flowpi..."
       http = EM::HttpRequest.new(
         "https://stream.flowdock.com/flows?filter=#{@options[:filter]}",
         :keepalive => true, :connect_timeout => 0, :inactivity_timeout => 0)
@@ -28,10 +43,10 @@ module Flowpi
       message = Flowpi::Message.new.parse(line)
       if message.has_content?
         if message.content.match(@options[:message_matcher])
-          puts "Speaking message: #{message.content}"
+          logger.info { "Speaking message: #{message.content}" }
           %x(espeak "#{message.content}" 2>/dev/null)
         else
-          puts "Ignoring message: #{message.content}"
+          logger.debug { "Ignoring message: #{message.content}" }
         end
       end
     end
