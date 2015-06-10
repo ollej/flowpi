@@ -44,7 +44,7 @@ module Flowpi
       if message.has_content?
         if message.content.match(@options[:message_matcher])
           logger.info { "Speaking message: #{message.content}" }
-          %x(espeak "#{message.content}" 2>/dev/null)
+          %x(espeak "#{message.content}" --stdout 2>/dev/null | aplay -D 'default')
         else
           logger.debug { "Ignoring message: #{message.content}" }
         end

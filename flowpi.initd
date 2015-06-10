@@ -25,7 +25,7 @@ case "$1" in
 
   start)
     log_begin_msg "Starting flowpi service"
-    sudo -u pi -E flowpi.rb >> /var/log/flowpi.log &
+    sudo -u pi -E flowpi.rb &
     log_end_msg $?
   ;;
 
